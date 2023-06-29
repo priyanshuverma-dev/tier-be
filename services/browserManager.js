@@ -1,25 +1,25 @@
-const puppeteer = require("puppeteer");
+import { launch, connect } from "puppeteer";
 
 let browserInstance = null;
 let browserInstanceWs = null;
 
-exports.getBrowser = async () => {
+export async function getBrowser() {
   if (!browserInstanceWs) {
-    browserInstance = await puppeteer.launch({ headless: false });
+    browserInstance = await launch({ headless: false });
     const WS = browserInstance.wsEndpoint();
     browserInstanceWs = WS;
   } else {
-    browserInstance = await puppeteer.connect({
+    browserInstance = await connect({
       browserWSEndpoint: browserInstanceWs,
     });
   }
   return browserInstance;
-};
+}
 
-exports.closeBrowser = async () => {
+export async function closeBrowser() {
   if (browserInstance) {
     await browserInstance.close();
     browserInstance = null;
     browserInstanceWs = null;
   }
-};
+}

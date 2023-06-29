@@ -1,15 +1,14 @@
-const puppeteer = require("puppeteer");
-const fs = require("fs");
-const BrowserManager = require("./services/browserManager");
+import { writeFile, existsSync, readFileSync } from "fs";
+import { getBrowser } from "../services/browserManager";
 
 // export const getReels = async () => {};
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const cookiesFilePath = "./cookies.json";
 
-exports.fetchSession = async (username, password) => {
+export async function fetchSession(username, password) {
   // const browser = await puppeteer.launch({ headless: "new" });
-  const browser = await BrowserManager.getBrowser();
+  const browser = await getBrowser();
 
   const page = await browser.newPage();
   try {
@@ -25,16 +24,12 @@ exports.fetchSession = async (username, password) => {
     // Save Session Cookies
     const cookiesObject = await page.cookies();
     // Write cookies to temp file to be used in other profile pages
-    fs.writeFile(
-      cookiesFilePath,
-      JSON.stringify(cookiesObject),
-      function (err) {
-        if (err) {
-          console.log("The file could not be written.", err);
-        }
-        console.log("Session has been successfully saved");
+    writeFile(cookiesFilePath, JSON.stringify(cookiesObject), function (err) {
+      if (err) {
+        console.log("The file could not be written.", err);
       }
-    );
+      console.log("Session has been successfully saved");
+    });
     if ((await browser.pages()).length >= 2) {
       await page.close();
     }
@@ -45,18 +40,18 @@ exports.fetchSession = async (username, password) => {
     console.log(err);
     return false;
   }
-};
+}
 
-exports.fetchReels = async () => {
+export async function fetchReels() {
   // const browser = await puppeteer.launch({ headless: "new" });
-  const browser = await BrowserManager.getBrowser();
+  const browser = await getBrowser();
 
   const page = await browser.newPage();
 
-  const previousSession = fs.existsSync(cookiesFilePath);
+  const previousSession = existsSync(cookiesFilePath);
   if (previousSession) {
     // If file exists, load the cookies
-    const cookiesString = fs.readFileSync(cookiesFilePath);
+    const cookiesString = readFileSync(cookiesFilePath);
     const parsedCookies = JSON.parse(cookiesString);
     if (parsedCookies.length !== 0) {
       for (let cookie of parsedCookies) {
@@ -94,4 +89,4 @@ exports.fetchReels = async () => {
   browser.disconnect();
 
   return reelData;
-};
+}

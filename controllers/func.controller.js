@@ -1,6 +1,6 @@
-const { fetchReels, fetchSession } = require("./scraping.func");
+import { fetchReels, fetchSession } from "./scraping.func";
 
-exports.getReels = async (req, res) => {
+export async function getReels(req, res) {
   try {
     const reels = await fetchReels();
 
@@ -15,9 +15,9 @@ exports.getReels = async (req, res) => {
       error: err.message,
     });
   }
-};
+}
 
-exports.relogin = async (req, res) => {
+export async function relogin(req, res) {
   if (req.body.username === null) {
     res.status(400).json({
       message: "You have not provided username",
@@ -51,4 +51,4 @@ exports.relogin = async (req, res) => {
       error: err.message,
     });
   }
-};
+}

@@ -11,4 +11,4 @@ const apiKeyMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = apiKeyMiddleware;
+export default apiKeyMiddleware;
