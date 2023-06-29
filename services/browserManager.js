@@ -5,7 +5,7 @@ let browserInstanceWs = null;
 
 export async function getBrowser() {
   if (!browserInstanceWs) {
-    browserInstance = await launch({ headless: false });
+    browserInstance = await launch({ headless: "new", args: ["--no-sandbox"] });
     const WS = browserInstance.wsEndpoint();
     browserInstanceWs = WS;
   } else {
