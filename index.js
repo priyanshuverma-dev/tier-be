@@ -1,7 +1,6 @@
 import express, { json } from "express";
 import cors from "cors";
 import { createServer } from "http";
-import { json as _json } from "body-parser";
 import compression from "compression";
 import router from "./route/index.js";
 import { notFoundMiddleware, errorMiddleware } from "./middlewares/server.js";
@@ -14,7 +13,11 @@ app.use(json());
 app.use("/api", router);
 app.use(cors());
 app.use(compression());
-app.use(_json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

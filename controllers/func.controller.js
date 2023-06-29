@@ -1,4 +1,4 @@
-import { fetchReels, fetchSession } from "./scraping.func";
+import { fetchReels, fetchSession } from "./scraping.func.js";
 
 export async function getReels(req, res) {
   try {

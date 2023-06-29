@@ -1,5 +1,5 @@
 import { writeFile, existsSync, readFileSync } from "fs";
-import { getBrowser } from "../services/browserManager";
+import { getBrowser } from "../services/browserManager.js";
 
 // export const getReels = async () => {};
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));

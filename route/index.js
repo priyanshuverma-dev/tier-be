@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getReels, relogin } from "../controllers/func.controller";
-import apiKeyMiddleware from "../middlewares/apikey.middleware";
+import { getReels, relogin } from "../controllers/func.controller.js";
+import apiKeyMiddleware from "../middlewares/apikey.middleware.js";
 
 const router = Router();
 
