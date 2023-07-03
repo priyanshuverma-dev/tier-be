@@ -5,7 +5,11 @@ let browserInstanceWs = null;
 
 export async function getBrowser() {
   if (!browserInstanceWs) {
-    browserInstance = await launch({ headless: "new", args: ["--no-sandbox"] });
+    browserInstance = await launch({
+      headless: "new",
+      args: ["--no-sandbox"],
+      executablePath: "/usr/bin/chromium-browser",
+    });
     const WS = browserInstance.wsEndpoint();
     browserInstanceWs = WS;
   } else {
