@@ -2,15 +2,13 @@ import express, { json } from "express";
 import cors from "cors";
 import { createServer } from "http";
 import compression from "compression";
-import router from "./route/index.js";
-import { notFoundMiddleware, errorMiddleware } from "./middlewares/server.js";
+import { getReels } from "../controllers/service.js";
 const app = express();
 
 const PORT = process.env.PORT || 8080;
 
 // All your routes and middleware here.....
 app.use(json());
-app.use("/api", router);
 app.use(cors());
 app.use(compression());
 app.use(
@@ -19,8 +17,13 @@ app.use(
   })
 );
 
-app.use(notFoundMiddleware);
-app.use(errorMiddleware);
+// All routes
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Status Ok",
+  });
+});
+app.get("/reel/*", getReels);
 
 const server = createServer(app);
 
