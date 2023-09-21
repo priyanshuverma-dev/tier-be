@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+
 import { convertInstagramReelsToDdInstagram } from "../utils.js";
 
 export async function getReels(req, res) {
