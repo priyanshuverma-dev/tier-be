@@ -2,9 +2,10 @@ import express, { json } from "express";
 import cors from "cors";
 import { createServer } from "http";
 import compression from "compression";
-import { getReels } from "../controllers/service.js";
+import { getReels, getTwitter } from "../controllers/service.js";
+// import { initializeRequestId } from "../lib/requestId.js";
 const app = express();
-
+// initializeRequestId();
 const PORT = process.env.PORT || 8080;
 
 // All your routes and middleware here.....
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
   });
 });
 app.get("/reel/*", getReels);
+app.get("/twitter/*", getTwitter);
 
 const server = createServer(app);
 
